@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-main',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -19,6 +20,12 @@ export class MainComponent implements OnInit {
     setTimeout(() => {
       this.showSpinner = false;
     }, 4000);
+    setTimeout(() => {
+      this._snackBar.open('Message', 'Close', {
+        duration: 4000,
+      })
+    }, 4000)
+
   }
 
 }
