@@ -12,4 +12,13 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  showSpinner = false;
+
+  loadSpinner() {
+    this.showSpinner = true;
+    setTimeout(() => {
+      this.showSpinner = false;
+    }, 4000);
+  }
+
 }
