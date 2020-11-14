@@ -3,7 +3,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -21,6 +21,16 @@ export class MainComponent implements OnInit {
   filteredTags: Observable<string[]>;
   tags: string[] = [];
   allFruits: string[] = ['Home', 'Work'];
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern('[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}'),
+  ]);
+  selectFormControl = new FormControl('', [
+    Validators.required,
+  ]);
+  titleFormControl = new FormControl('', [
+    Validators.required,
+  ])
 
   @ViewChild('tagInput') fruitInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;

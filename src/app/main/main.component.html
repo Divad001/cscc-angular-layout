@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <span>Card creator</span>
+  <span>Todo cards</span>
   <span class="example-spacer"></span>
   <button
     mat-icon-button
@@ -19,19 +19,26 @@
 
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Create cards</mat-card-title>
+    <mat-card-title>Create todo cards</mat-card-title>
     <mat-card-subtitle>Fill the forms</mat-card-subtitle>
   </mat-card-header>
+
   <mat-card-content>
     <div class="form-fields-container">
       <mat-form-field appearance="standard">
         <mat-label>Email</mat-label>
-        <input matInput />
+        <input type="email" matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com" required>
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
       </mat-form-field>
       <br />
       <mat-form-field appearance="standard">
         <mat-label>Priority</mat-label>
-        <mat-select>
+        <mat-select [formControl]="selectFormControl" required>
           <mat-option value="option">Low</mat-option>
           <mat-option value="option">Medium</mat-option>
           <mat-option value="option">High</mat-option>
@@ -71,13 +78,10 @@
       <br />
       <mat-form-field appearance="standard">
         <mat-label>Title</mat-label>
-        <textarea
-          matInput
-          cdkTextareaAutosize
-          #autosize="cdkTextareaAutosize"
-          cdkAutosizeMinRows="1"
-          cdkAutosizeMaxRows="1"
-        ></textarea>
+        <input matInput [formControl]="titleFormControl" required>
+        <mat-error *ngIf="titleFormControl.hasError('required')">
+          Title is <strong>required</strong>
+        </mat-error>
       </mat-form-field>
       <br />
       <mat-form-field appearance="standard">
