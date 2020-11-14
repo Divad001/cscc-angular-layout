@@ -1,48 +1,94 @@
 <mat-toolbar color="primary">
-  <span>My App</span>
+  <span>Card creator</span>
   <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+  <button
+    mat-icon-button
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
     <mat-icon>favorite</mat-icon>
   </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with share icon"
+  >
     <mat-icon>share</mat-icon>
   </button>
 </mat-toolbar>
 
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Card</mat-card-title>
-    <mat-card-subtitle>Card</mat-card-subtitle>
+    <mat-card-title>Create cards</mat-card-title>
+    <mat-card-subtitle>Fill the forms</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <div class="form-fields-container">
       <mat-form-field appearance="standard">
-        <mat-label>Input</mat-label>
-        <input matInput>
+        <mat-label>Email</mat-label>
+        <input matInput />
       </mat-form-field>
-      <br>
+      <br />
       <mat-form-field appearance="standard">
-        <mat-label>Select</mat-label>
+        <mat-label>Priority</mat-label>
         <mat-select>
-          <mat-option value="option">Option</mat-option>
+          <mat-option value="option">Low</mat-option>
+          <mat-option value="option">Medium</mat-option>
+          <mat-option value="option">High</mat-option>
         </mat-select>
       </mat-form-field>
-      <br>
+      <br />
+      <mat-form-field class="example-chip-list">
+        <mat-chip-list #chipList aria-label="Tag(s)">
+          <mat-chip
+            *ngFor="let tag of tags"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="remove(tag)"
+          >
+            {{ tag }}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            placeholder="Tag(s)"
+            #tagInput
+            [formControl]="tagsControl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)"
+          />
+        </mat-chip-list>
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="selected($event)"
+        >
+          <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+            {{ tag }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <br />
       <mat-form-field appearance="standard">
-        <mat-label>Select</mat-label>
-        <mat-select>
-          <mat-option value="option">Option</mat-option>
-        </mat-select>
+        <mat-label>Title</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="1"
+        ></textarea>
       </mat-form-field>
-      <br>
-      <mat-form-field appearance="outline">
-        <mat-label>Textarea</mat-label>
-        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="50"></textarea>
-      </mat-form-field>
-      <br>
-      <mat-form-field>
-        <mat-label>Textarea</mat-label>
-        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="50"></textarea>
+      <br />
+      <mat-form-field appearance="standard">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="10"
+          cdkAutosizeMaxRows="50"
+        ></textarea>
       </mat-form-field>
     </div>
   </mat-card-content>
@@ -52,4 +98,3 @@
 </mat-card>
 
 <mat-progress-bar *ngIf="showSpinner" mode="indeterminate"></mat-progress-bar>
-
