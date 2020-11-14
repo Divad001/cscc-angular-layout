@@ -9,6 +9,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import Card from '../models/card';
 
 @Component({
   selector: 'app-main',
@@ -24,19 +25,20 @@ export class MainComponent implements OnInit {
   mainForm: FormGroup;
 
   showSpinner = false;
-  tagsControl = new FormControl();
+  tagsFormControl = new FormControl();
   filteredTags: Observable<string[]>;
   tags: string[] = [];
+  cards: Card[] = [];
   allTags: string[] = ['Home', 'Work'];
 
-  @ViewChild('tagInput') fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   constructor(private _snackBar: MatSnackBar, private formBuilder: FormBuilder) {
-    this.filteredTags = this.tagsControl.valueChanges.pipe(
+    this.filteredTags = this.tagsFormControl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) =>
-        fruit ? this._filter(fruit) : this.allTags.slice()
+      map((tag: string | null) =>
+        tag ? this._filter(tag) : this.allTags.slice()
       )
     );
   }
@@ -48,7 +50,8 @@ export class MainComponent implements OnInit {
         Validators.pattern('[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}')]
         )],
       selectFormControl: [null, Validators.required],
-      titleFormControl: [null, Validators.required]
+      titleFormControl: [null, Validators.required],
+      descFormControl: [null]
     });
   }
 
@@ -62,7 +65,7 @@ export class MainComponent implements OnInit {
     if (input) {
       input.value = '';
     }
-    this.tagsControl.setValue(null);
+    this.tagsFormControl.setValue(null);
   }
 
   remove(fruit: string): void {
@@ -77,8 +80,8 @@ export class MainComponent implements OnInit {
     if (!this.tags.includes(event.option.viewValue)) {
       this.tags.push(event.option.viewValue);
     }
-    this.fruitInput.nativeElement.value = '';
-    this.tagsControl.setValue(null);
+    this.tagInput.nativeElement.value = '';
+    this.tagsFormControl.setValue(null);
   }
 
   private _filter(value: string): string[] {
@@ -89,13 +92,22 @@ export class MainComponent implements OnInit {
     );
   }
 
-  loadSpinner() {
+  addCard() {
     this.showSpinner = true;
     setTimeout(() => {
       this.showSpinner = false;
     }, 4000);
+    let temp: Card = new Card(
+      this.mainForm.value.emailFormControl,
+      this.mainForm.value.selectFormControl,
+      this.tags,
+      this.mainForm.value.titleFormControl,
+      this.mainForm.value.descFormControl
+    );
+    this.cards.push(temp);
+    console.log(this.cards)
     setTimeout(() => {
-      this._snackBar.open('Message', 'Close', {
+      this._snackBar.open('Todo card has been added to the list', 'Close', {
         duration: 4000,
       });
     }, 4000);
