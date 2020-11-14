@@ -68,8 +68,8 @@ export class MainComponent implements OnInit {
     this.tagsFormControl.setValue(null);
   }
 
-  remove(fruit: string): void {
-    const index = this.tags.indexOf(fruit);
+  remove(tag: string): void {
+    const index = this.tags.indexOf(tag);
 
     if (index >= 0) {
       this.tags.splice(index, 1);
@@ -88,7 +88,7 @@ export class MainComponent implements OnInit {
     const filterValue = value.toLowerCase();
 
     return this.allTags.filter(
-      (fruit) => fruit.toLowerCase().indexOf(filterValue) === 0
+      (tag) => tag.toLowerCase().indexOf(filterValue) === 0
     );
   }
 
@@ -104,12 +104,35 @@ export class MainComponent implements OnInit {
       this.mainForm.value.titleFormControl,
       this.mainForm.value.descFormControl
     );
-    this.cards.push(temp);
-    console.log(this.cards)
     setTimeout(() => {
+      this.cards.push(temp);
+      this.mainForm.reset();
+      console.log(this.cards)
       this._snackBar.open('Todo card has been added to the list', 'Close', {
         duration: 4000,
       });
     }, 4000);
+  }
+
+  removeCard(card: Card) {
+    const index = this.cards.indexOf(card);
+
+    if (index >= 0) {
+      this.cards.splice(index, 1);
+    }
+  }
+
+  completeCard(card: Card) {
+    const index = this.cards.indexOf(card);
+
+    if (index >= 0) {
+      if (this.cards[index].isComplete === false) {
+        this.cards[index].complete(true);
+        console.log(this.cards);
+      } else {
+        this.cards[index].complete(false);
+        console.log(this.cards);
+      }
+    }
   }
 }

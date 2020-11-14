@@ -4,6 +4,7 @@ export default class Card{
   chips: string[];
   title: string;
   desc: string;
+  isComplete: boolean;
 
   constructor(email: string, select: string, chips: string[], title: string, desc: string) {
     this.email = email;
@@ -11,5 +12,10 @@ export default class Card{
     this.chips = chips;
     this.title = title;
     this.desc = desc;
+    this.isComplete = false;
+  }
+
+  complete(status: boolean) {
+    this.isComplete = status;
   }
 }

@@ -99,7 +99,26 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-button (click)="addCard()" color="primary" [disabled]="mainForm.invalid">Submit</button>
+    <mat-progress-bar *ngIf="showSpinner" mode="indeterminate"></mat-progress-bar>
   </mat-card-actions>
 </mat-card>
+<br>
 
-<mat-progress-bar *ngIf="showSpinner" mode="indeterminate"></mat-progress-bar>
+<div>
+  <mat-card *ngFor="let card of cards">
+    <mat-card-header>
+      <mat-card-title>{{ card.title }}</mat-card-title>
+      <mat-card-subtitle>{{ card.select }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ card.desc }}</p>
+      <p>
+        <span *ngFor="let tag of card.chips">{{ tag }} </span>
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="removeCard(card)">Delete</button>
+      <button mat-button (click)="completeCard(card)">Complete/Uncomplete</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
