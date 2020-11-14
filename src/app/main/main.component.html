@@ -27,21 +27,36 @@
     <div class="form-fields-container">
       <mat-form-field appearance="standard">
         <mat-label>Email</mat-label>
+<<<<<<< HEAD
         <input type="email" matInput formControlName="emailFormControl" placeholder="Ex. pat@example.com" required>
     <mat-error *ngIf="mainForm.controls['emailFormControl'].hasError('email') && !mainForm.controls['emailFormControl'].hasError('required')">
       Please enter a valid email address
     </mat-error>
     <mat-error *ngIf="mainForm.controls['emailFormControl'].hasError('required')">
+=======
+        <input type="email" matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com" required>
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+>>>>>>> c2c4af24bde3ab0566f71e781ad54331e8b58b84
       Email is <strong>required</strong>
     </mat-error>
       </mat-form-field>
       <br />
       <mat-form-field appearance="standard">
         <mat-label>Priority</mat-label>
+<<<<<<< HEAD
         <mat-select formControlName="selectFormControl" required>
           <mat-option value="low">Low</mat-option>
           <mat-option value="medium">Medium</mat-option>
           <mat-option value="high">High</mat-option>
+=======
+        <mat-select [formControl]="selectFormControl" required>
+          <mat-option value="option">Low</mat-option>
+          <mat-option value="option">Medium</mat-option>
+          <mat-option value="option">High</mat-option>
+>>>>>>> c2c4af24bde3ab0566f71e781ad54331e8b58b84
         </mat-select>
       </mat-form-field>
       <br />
@@ -78,8 +93,13 @@
       <br />
       <mat-form-field appearance="standard">
         <mat-label>Title</mat-label>
+<<<<<<< HEAD
         <input matInput formControlName="titleFormControl" required>
         <mat-error *ngIf="mainForm.controls['titleFormControl'].hasError('required')">
+=======
+        <input matInput [formControl]="titleFormControl" required>
+        <mat-error *ngIf="titleFormControl.hasError('required')">
+>>>>>>> c2c4af24bde3ab0566f71e781ad54331e8b58b84
           Title is <strong>required</strong>
         </mat-error>
       </mat-form-field>
