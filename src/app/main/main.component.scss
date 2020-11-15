@@ -1,14 +1,48 @@
+#main {
+  margin: 10px auto 20px;
+  width: 30%;
+  min-width: 350px;
+}
+
+#cards {
+  margin: 0 auto 10px;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  mat-card {
+    width: 20%;
+    min-width: 250px;
+    margin: 5px;
+
+    mat-card-content {
+      min-height: 195px;
+      .desc {
+        overflow: auto;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        height: 150px;
+      }
+
+      mat-chip {
+        margin: 0 1px;
+      }
+    }
+
+    mat-card-actions {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
+
 .example-spacer {
   flex: 1 1 auto;
 }
 
 .complete {
   text-decoration: line-through;
-}
-
-#main {
-  margin: 10px auto 20px;
-  width: 30%;
 }
 
 .form-fields-container {
@@ -19,4 +53,19 @@
   .priorityInput, .titleInput {
     width: 50%;
   }
+}
+
+.home {
+  color: #fff;
+  background-color: #4CAF50;
+}
+
+.work {
+  color: #fff;
+  background-color: #F44336;
+}
+
+.else {
+  color: #fff;
+  background-color: #03A9F4;
 }

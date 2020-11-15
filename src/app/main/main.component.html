@@ -3,7 +3,7 @@
   <span class="example-spacer"></span>
   <a
     mat-icon-button
-    class="example-icon favorite-icon"
+    class="favorite-icon"
     aria-label="Example icon-button with heart icon"
     href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO"
     target="_blank"
@@ -25,7 +25,7 @@
   <mat-card [formGroup]="mainForm">
     <mat-card-header>
       <mat-card-title>Create todo cards</mat-card-title>
-      <mat-card-subtitle>Fill the forms</mat-card-subtitle>
+      <mat-card-subtitle>Fill the form</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content class="mainCard">
@@ -57,20 +57,12 @@
             autocomplete="email"
             formControlName="emailFormControl"
             placeholder="Ex. pat@example.com"
-            required
           />
           <mat-error
             *ngIf="
-              mainForm.controls['emailFormControl'].hasError('email') &&
-              !mainForm.controls['emailFormControl'].hasError('required')
-            "
+              mainForm.controls['emailFormControl'].hasError('email')"
           >
             Please enter a valid email address
-          </mat-error>
-          <mat-error
-            *ngIf="mainForm.controls['emailFormControl'].hasError('required')"
-          >
-            Email is <strong>required</strong>
           </mat-error>
         </mat-form-field>
         <br />
@@ -83,7 +75,6 @@
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="10"
             cdkAutosizeMaxRows="10"
-            maxlength="228"
           ></textarea>
         </mat-form-field>
         <mat-form-field class="example-chip-list">
@@ -134,31 +125,29 @@
     ></mat-progress-bar>
   </mat-card>
 </div>
+<mat-divider></mat-divider>
 
-<div>
+<div id="cards">
   <mat-card *ngFor="let card of cards">
     <mat-card-header>
-      <mat-card-title
-        *ngIf="card.isComplete; else titleBlock"
-        class="complete"
-        >{{ card.title }}</mat-card-title
-      >
-      <ng-template #titleBlock>
-        <mat-card-title>
-          {{ card.title }}
-        </mat-card-title>
-      </ng-template>
+      <mat-card-title>
+        {{ card.title }}
+      </mat-card-title>
       <mat-card-subtitle>{{ card.select }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p *ngIf="card.isComplete; else inCompleteBlock" class="complete">
+      <p *ngIf="card.isComplete; else inCompleteBlock" class="complete desc">
         {{ card.desc }}
       </p>
       <ng-template #inCompleteBlock>
-        <p class="incomplete">{{ card.desc }}</p>
+        <p class="incomplete desc">{{ card.desc }}</p>
       </ng-template>
       <p>
-        <span *ngFor="let tag of card.chips">{{ tag }} </span>
+        <span *ngFor="let tag of card.chips">
+          <mat-chip *ngIf="tag === 'Home'" class="home">{{ tag }}</mat-chip>
+          <mat-chip *ngIf="tag === 'Work'" class="work">{{ tag }}</mat-chip>
+          <mat-chip *ngIf="tag !== 'Home' && tag !== 'Work'" class="else">{{ tag }}</mat-chip>
+        </span>
       </p>
     </mat-card-content>
     <mat-card-actions>
