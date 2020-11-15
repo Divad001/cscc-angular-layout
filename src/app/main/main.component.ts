@@ -146,6 +146,7 @@ export class MainComponent implements OnInit {
     setTimeout(() => {
       this.cards.push(temp);
       this.mainForm.reset();
+      this.tags = [];
       this._snackBar.open('Todo card has been added to the list', 'Close', {
         duration: 4000,
       });

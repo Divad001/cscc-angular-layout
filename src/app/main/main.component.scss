@@ -12,27 +12,30 @@
   flex-wrap: wrap;
 
   mat-card {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
     width: 20%;
     min-width: 250px;
     margin: 5px;
 
     mat-card-content {
-      min-height: 195px;
       .desc {
         overflow: auto;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
+        overflow-wrap: anywhere;
         height: 150px;
       }
 
       mat-chip {
-        margin: 0 1px;
+        margin: 1px;
       }
     }
 
     mat-card-actions {
       display: flex;
       justify-content: space-between;
+      margin: auto 0 0;
     }
   }
 }
