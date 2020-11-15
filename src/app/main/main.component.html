@@ -1,124 +1,183 @@
 <mat-toolbar color="primary">
   <span>Todo cards</span>
   <span class="example-spacer"></span>
-  <button
+  <a
     mat-icon-button
     class="example-icon favorite-icon"
     aria-label="Example icon-button with heart icon"
+    href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO"
+    target="_blank"
   >
     <mat-icon>favorite</mat-icon>
-  </button>
-  <button
+  </a>
+  <a
     mat-icon-button
     class="example-icon"
     aria-label="Example icon-button with share icon"
+    href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO"
+    target="_blank"
   >
     <mat-icon>share</mat-icon>
-  </button>
+  </a>
 </mat-toolbar>
 
-<mat-card [formGroup]="mainForm">
-  <mat-card-header>
-    <mat-card-title>Create todo cards</mat-card-title>
-    <mat-card-subtitle>Fill the forms</mat-card-subtitle>
-  </mat-card-header>
+<div id="main">
+  <mat-card [formGroup]="mainForm">
+    <mat-card-header>
+      <mat-card-title>Create todo cards</mat-card-title>
+      <mat-card-subtitle>Fill the forms</mat-card-subtitle>
+    </mat-card-header>
 
-  <mat-card-content>
-    <div class="form-fields-container">
-      <mat-form-field appearance="standard">
-        <mat-label>Email</mat-label>
-        <input type="email" matInput formControlName="emailFormControl" placeholder="Ex. pat@example.com" required>
-    <mat-error *ngIf="mainForm.controls['emailFormControl'].hasError('email') && !mainForm.controls['emailFormControl'].hasError('required')">
-      Please enter a valid email address
-    </mat-error>
-    <mat-error *ngIf="mainForm.controls['emailFormControl'].hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field appearance="standard">
-        <mat-label>Priority</mat-label>
-        <mat-select formControlName="selectFormControl" required>
-          <mat-option value="low">Low</mat-option>
-          <mat-option value="medium">Medium</mat-option>
-          <mat-option value="high">High</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <br />
-      <mat-form-field class="example-chip-list">
-        <mat-chip-list #chipList aria-label="Tag(s)">
-          <mat-chip
-            *ngFor="let tag of tags"
-            [selectable]="selectable"
-            [removable]="removable"
-            (removed)="remove(tag)"
+    <mat-card-content class="mainCard">
+      <div class="form-fields-container">
+        <mat-form-field appearance="standard" class="titleInput">
+          <mat-label>Title</mat-label>
+          <input matInput autocomplete="off" formControlName="titleFormControl" required />
+          <mat-error
+            *ngIf="mainForm.controls['titleFormControl'].hasError('required')"
           >
-            {{ tag }}
-            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-          </mat-chip>
+            Title is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="standard" class="priorityInput">
+          <mat-label>Priority</mat-label>
+          <mat-select formControlName="selectFormControl" required>
+            <mat-option value="low">Low</mat-option>
+            <mat-option value="medium">Medium</mat-option>
+            <mat-option value="high">High</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="standard">
+          <mat-label>Email</mat-label>
           <input
-            placeholder="Tag(s)"
-            #tagInput
-            [formControl]="tagsFormControl"
-            [matAutocomplete]="auto"
-            [matChipInputFor]="chipList"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            (matChipInputTokenEnd)="add($event)"
+            matInput
+            type="email"
+            autocomplete="email"
+            formControlName="emailFormControl"
+            placeholder="Ex. pat@example.com"
+            required
           />
-        </mat-chip-list>
-        <mat-autocomplete
-          #auto="matAutocomplete"
-          (optionSelected)="selected($event)"
-        >
-          <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
-            {{ tag }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <br />
-      <mat-form-field appearance="standard">
-        <mat-label>Title</mat-label>
-        <input matInput formControlName="titleFormControl" required>
-        <mat-error *ngIf="mainForm.controls['titleFormControl'].hasError('required')">
-          Title is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <br />
-      <mat-form-field appearance="standard">
-        <mat-label>Description</mat-label>
-        <textarea
-          matInput
-          formControlName="descFormControl"
-          cdkTextareaAutosize
-          #autosize="cdkTextareaAutosize"
-          cdkAutosizeMinRows="10"
-          cdkAutosizeMaxRows="50"
-        ></textarea>
-      </mat-form-field>
-    </div>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button (click)="addCard()" color="primary" [disabled]="mainForm.invalid">Submit</button>
-    <mat-progress-bar *ngIf="showSpinner" mode="indeterminate"></mat-progress-bar>
-  </mat-card-actions>
-</mat-card>
-<br>
+          <mat-error
+            *ngIf="
+              mainForm.controls['emailFormControl'].hasError('email') &&
+              !mainForm.controls['emailFormControl'].hasError('required')
+            "
+          >
+            Please enter a valid email address
+          </mat-error>
+          <mat-error
+            *ngIf="mainForm.controls['emailFormControl'].hasError('required')"
+          >
+            Email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="standard">
+          <mat-label>Description</mat-label>
+          <textarea
+            matInput
+            formControlName="descFormControl"
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="10"
+            cdkAutosizeMaxRows="10"
+            maxlength="228"
+          ></textarea>
+        </mat-form-field>
+        <mat-form-field class="example-chip-list">
+          <mat-chip-list #chipList aria-label="Tag(s)">
+            <mat-chip
+              *ngFor="let tag of tags"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="remove(tag)"
+            >
+              {{ tag }}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="Tag(s)"
+              #tagInput
+              [formControl]="tagsFormControl"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)"
+            />
+          </mat-chip-list>
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="selected($event)"
+          >
+            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+              {{ tag }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-raised-button
+        (click)="addCard()"
+        color="primary"
+        [disabled]="mainForm.invalid"
+      >
+        Submit
+      </button>
+    </mat-card-actions>
+    <mat-progress-bar
+      *ngIf="showSpinner"
+      mode="indeterminate"
+    ></mat-progress-bar>
+  </mat-card>
+</div>
 
 <div>
   <mat-card *ngFor="let card of cards">
     <mat-card-header>
-      <mat-card-title>{{ card.title }}</mat-card-title>
+      <mat-card-title
+        *ngIf="card.isComplete; else titleBlock"
+        class="complete"
+        >{{ card.title }}</mat-card-title
+      >
+      <ng-template #titleBlock>
+        <mat-card-title>
+          {{ card.title }}
+        </mat-card-title>
+      </ng-template>
       <mat-card-subtitle>{{ card.select }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>{{ card.desc }}</p>
+      <p *ngIf="card.isComplete; else inCompleteBlock" class="complete">
+        {{ card.desc }}
+      </p>
+      <ng-template #inCompleteBlock>
+        <p class="incomplete">{{ card.desc }}</p>
+      </ng-template>
       <p>
         <span *ngFor="let tag of card.chips">{{ tag }} </span>
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button (click)="removeCard(card)">Delete</button>
-      <button mat-button (click)="completeCard(card)">Complete/Uncomplete</button>
+      <button mat-flat-button color="primary" (click)="removeCard(card)">
+        Delete
+      </button>
+      <button
+        *ngIf="card.isComplete; else elseBlock"
+        mat-flat-button
+        color="primary"
+        (click)="completeCard(card)"
+      >
+        Incomplete
+      </button>
+      <ng-template #elseBlock>
+        <button mat-flat-button color="primary" (click)="completeCard(card)">
+          Complete
+        </button>
+      </ng-template>
     </mat-card-actions>
   </mat-card>
 </div>

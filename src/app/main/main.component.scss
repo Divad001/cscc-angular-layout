@@ -1,3 +1,22 @@
 .example-spacer {
   flex: 1 1 auto;
 }
+
+.complete {
+  text-decoration: line-through;
+}
+
+#main {
+  margin: 10px auto 20px;
+  width: 30%;
+}
+
+.form-fields-container {
+  mat-form-field {
+    width: 100%;
+  }
+
+  .priorityInput, .titleInput {
+    width: 50%;
+  }
+}

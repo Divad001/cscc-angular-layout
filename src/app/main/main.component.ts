@@ -28,7 +28,7 @@ export class MainComponent implements OnInit {
   tagsFormControl = new FormControl();
   filteredTags: Observable<string[]>;
   tags: string[] = [];
-  cards: Card[] = [];
+  cards: Card[] = [new Card('asd@asd.asd', 'Low', ['Home'], 'asd', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')];
   allTags: string[] = ['Home', 'Work'];
 
   @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
